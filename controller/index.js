@@ -19,7 +19,7 @@ class control {
     }
     createUser(req,res){
         const data = req.body;
-        userModel.createUser(data, (err,result) => {
+        userModel.createUser(res, data, (err,result) => {
             if(err) res.send({err});
             else res.send({result})
         })
@@ -27,7 +27,7 @@ class control {
     updateUser(req,res){
         const data = req.body;
         const id = req.params.id;
-        userModel.createUser(data, id, (err,result) => {
+        userModel.updateUser(data, id, (err,result) => {
             if(err) res.send({err});
             else res.send({result})
         })

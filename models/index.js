@@ -4,7 +4,7 @@ const {createJWT} = require('../middleware/AuthenticatedUser')
 
 class user {
     fetchUsers(result){
-        sql.query(`SELECT userID, firstName, lastName, userEmail, userRole FROM users;`, (err,results) => {
+        sql.query(`SELECT userID, firstName, lastName, userEmail, userPass, userRole FROM users;`, (err,results) => {
             if(err) result(err);
             else result(null, results);
         })
@@ -17,8 +17,7 @@ class user {
         })
     }
 
-    async createUser(result){
-        let data = req.body;
+    async createUser(res, data, result){
         data.userPass = await bcrypt.hash(data.userPass, 15);
         let user = {
             emailAdd : data.userEmail,
@@ -32,23 +31,22 @@ class user {
                     maxAge: 3600000,
                     httpOnly: true
                 });
-                if(err) result(err, null);
-                else result(null, results);
+                if(err) result(err,null);
+                else result(null, results)
             }
         })
     }
 
-    updateUser(result){
-        let data = req.body;
+    updateUser(data, id, result){
         if(data.userPass !== null || data.userPass !== undefined) data.userPass = bcrypt.hashSync(data.userPass, 15);
-        sql.query(`UPDATE users SET ? WHERE userID = ?;`, [data, req.params.id], (err, results) => {
+        sql.query(`UPDATE users SET ? WHERE userID = ?;`, [data, id], (err, results) => {
             if(err) result(err, null);
             else result(null, results);
         })
     }
 
-    deleteUser(result){
-        sql.query(`DELETE FROM users WHERE userID = ?;`, [req.params.id], (err, results) => {
+    deleteUser(id, result){
+        sql.query(`DELETE FROM users WHERE userID = ?;`, [id], (err, results) => {
             if(err) result(err, null);
             else result(null, results);
         })

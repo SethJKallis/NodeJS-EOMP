@@ -6,6 +6,7 @@ const bodyParser = require('body-parser');
 
 const port = process.env.PORT || 3200;
 
+const {errorHandling} = require('./middleware/ErrorHandling');
 const routes = require('./routes/index');
 
 app.use((req, res, next) => {
@@ -26,4 +27,6 @@ app.use(routes);
 
 app.listen(port, function(){
     console.log(`Server is running on port ${port}`)
-})
+});
+
+// app.use(errorHandling);
