@@ -5,6 +5,36 @@ const {createJWT} = require('../middleware/AuthenticatedUser')
 
 class control {
     //USER CONTROL
+login(req,res){
+    const data = req.body;
+    const {userEmail, userPass} = data;
+    userModel.login(data, (err,results) => {
+        if(err) res.send({err});
+        else{
+            const jwt = createJWT(
+                {
+                    userEmail, userPass
+                }
+            );
+            res.cookie('LegitimateUser', jwt, {
+                maxAge: 3600000,
+                httpOnly: true
+            })
+            if(results){
+                res.status(200).json({
+                    message: "Logged In",
+                    jwt,
+                    result: results[0]
+                })
+            } else {
+                res.status(401).json({
+                    err: "Your Information is Invalid!"
+                })
+            }
+        }
+    })
+}
+
     fetchUsers(req,res){
         userModel.fetchUsers((err,results) => {
             if(err) res.send({err});

@@ -3,9 +3,16 @@ const bcrypt = require('bcrypt');
 const {createJWT} = require('../middleware/AuthenticatedUser')
 
 class user {
-    login(id ,result){
-        sql.query(`SELECT firstName, lastName, userEmail, userRole FROM users WHERE userEmail =?;`, [id], (err,result) => {
+    login(data ,result){
+        const {userEmail, userPass} = data;
+        sql.query(`SELECT firstName, lastName, userEmail, userPass, userRole FROM users WHERE userEmail =?;`, [userEmail], async (err,results) => {
             if(err) result(err,null);
+            else{
+                await bcrypt.compare(userPass, results[0].userPass, (err, results) => {
+                    if(err) result({err,message:"You provided incorrect details!"}, null);
+                    else result(null, results);
+                })
+            }
         })
     }
 
