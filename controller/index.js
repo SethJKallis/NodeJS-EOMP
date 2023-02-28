@@ -1,6 +1,7 @@
 const {user, products} = require('../models/index');
 const userModel = new user();
 const productsModel = new products;
+const {createJWT} = require('../middleware/AuthenticatedUser')
 
 class control {
     //USER CONTROL
@@ -19,9 +20,20 @@ class control {
     }
     createUser(req,res){
         const data = req.body;
-        userModel.createUser(res, data, (err,result) => {
+        let user = {
+            emailAdd : data.userEmail,
+            userPass : data.userPass
+        };
+        userModel.createUser(data, (err,result) => {
             if(err) res.send({err});
-            else res.send({result})
+            else{
+                const jwt = createJWT(user);
+                res.cookie("LegitimateUser", jwt, {
+                    maxAge: 3600000,
+                    httpOnly: true
+                });
+                res.send({result})
+            } 
         })
     }
     updateUser(req,res){

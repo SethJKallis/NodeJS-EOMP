@@ -3,6 +3,12 @@ const bcrypt = require('bcrypt');
 const {createJWT} = require('../middleware/AuthenticatedUser')
 
 class user {
+    login(id ,result){
+        sql.query(`SELECT firstName, lastName, userEmail, userRole FROM users WHERE userEmail =?;`, [id], (err,result) => {
+            if(err) result(err,null);
+        })
+    }
+
     fetchUsers(result){
         sql.query(`SELECT userID, firstName, lastName, userEmail, userPass, userRole FROM users;`, (err,results) => {
             if(err) result(err);
@@ -17,24 +23,13 @@ class user {
         })
     }
 
-    async createUser(res, data, result){
+    async createUser(data, result){
         data.userPass = await bcrypt.hash(data.userPass, 15);
-        let user = {
-            emailAdd : data.userEmail,
-            userPass : data.userPass
-        };
         sql.query(`INSERT INTO users SET ?;`, [data], (err,results) => {
             if(err) result(err, null);
-            else {
-                const jwt = createJWT(user);
-                res.cookie("LegitimateUser", jwt, {
-                    maxAge: 3600000,
-                    httpOnly: true
-                });
-                if(err) result(err,null);
-                else result(null, results)
+            else result(null, results);
             }
-        })
+        )
     }
 
     updateUser(data, id, result){
