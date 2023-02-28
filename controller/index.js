@@ -24,7 +24,7 @@ login(req,res){
                 res.status(200).json({
                     message: "Logged In",
                     jwt,
-                    result: results[0]
+                    result: results
                 })
             } else {
                 res.status(401).json({

@@ -6,11 +6,12 @@ class user {
     login(data ,result){
         const {userEmail, userPass} = data;
         sql.query(`SELECT firstName, lastName, userEmail, userPass, userRole FROM users WHERE userEmail =?;`, [userEmail], async (err,results) => {
+            const value = results;
             if(err) result(err,null);
             else{
                 await bcrypt.compare(userPass, results[0].userPass, (err, results) => {
                     if(err) result({err,message:"You provided incorrect details!"}, null);
-                    else result(null, results);
+                    else result(null, (results, value));
                 })
             }
         })
