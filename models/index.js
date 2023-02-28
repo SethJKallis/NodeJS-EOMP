@@ -64,29 +64,29 @@ class products {
         });
     }
 
-    fetchProduct(result){
-        sql.query(`SELECT prodID, prodName, quantity, catID, imgUrl FROM products WHERE prodID = ?;`, [req.params.id], (err,results) => {
+    fetchProduct(id, result){
+        sql.query(`SELECT prodID, prodName, quantity, catID, imgUrl FROM products WHERE prodID = ?;`, [id], (err,results) => {
             if(err) result(err, null);
             else result(null, results);
         })
     }
 
-    addProduct(result){
-        sql.query(`INSERT INTO products SET ?;`, [req.body], (err, results) => {
+    addProduct(data, result){
+        sql.query(`INSERT INTO products SET ?;`, [data], (err, results) => {
             if(err) result(err, null);
             else result(null, results);
         })
     }
 
-    updateProduct(result){
-        sql.query(`UPDATE products SET ? WHERE prodID = ?;`, [req.body, req.params.id], (err, results) => {
+    updateProduct(data,id, result){
+        sql.query(`UPDATE products SET ? WHERE prodID = ?;`, [data, id], (err, results) => {
             if(err) result(err, null);
             else result(null, results);
         })
     }
 
-    deleteProduct(result){
-        sql.query(`DELETE FROM products WHERE prodID = ?`, [req.params.id], (err, results) => {
+    deleteProduct(id,result){
+        sql.query(`DELETE FROM products WHERE prodID = ?`, [id], (err, results) => {
             if(err) result(err, null);
             else result(null, results);
         })

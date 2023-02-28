@@ -98,7 +98,7 @@ login(req,res){
     }
     createProduct(req,res){
         const data = req.body;
-        productsModel.createProduct(data, (err,result) => {
+        productsModel.addProduct(data, (err,result) => {
             if(err) res.send({err});
             else res.send({result});
         })
