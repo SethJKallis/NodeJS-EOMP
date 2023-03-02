@@ -4,8 +4,8 @@ const {createJWT} = require('../middleware/AuthenticatedUser')
 
 class user {
     login(data ,result){
-        const {userEmail, userPass} = data;
-        sql.query(`SELECT firstName, lastName, userEmail, userPass, userRole FROM users WHERE userEmail =?;`, [userEmail], async (err,results) => {
+        const {emailAdd, userPass} = data;
+        sql.query(`SELECT firstName, lastName, emailAdd, userPass, userRole, userProfile, joinDate FROM users WHERE emailAdd =?;`, [emailAdd], async (err,results) => {
             const value = results;
             if(err) result(err,null);
             else{
@@ -18,14 +18,14 @@ class user {
     }
 
     fetchUsers(result){
-        sql.query(`SELECT userID, firstName, lastName, userEmail, userPass, userRole FROM users;`, (err,results) => {
+        sql.query(`SELECT userID, firstName, lastName, gender, emailAdd, userPass, userRole, userProfile FROM users;`, (err,results) => {
             if(err) result(err);
             else result(null, results);
         })
     }
 
     fetchUser(id, result){
-        sql.query(`SELECT userID, firstName, lastName, userEmail, userRole FROM users WHERE userID = ?;`, [id], (err, results) => {
+        sql.query(`SELECT userID, firstName, lastName, gender, emailAdd, userRole, userPass FROM users WHERE userID = ?;`, [id], (err, results) => {
             if(err) result(err, null);
             else result(null, results);
         })
@@ -58,14 +58,14 @@ class user {
 
 class products {
     fetchProducts(result){
-        sql.query(`SELECT prodID, prodName, quantity, catID, imgUrl FROM products;`, (err, results) => {
+        sql.query(`SELECT * FROM products;`, (err, results) => {
             if(err) result(err, null);
             else result(null, results);
         });
     }
 
     fetchProduct(id, result){
-        sql.query(`SELECT prodID, prodName, quantity, catID, imgUrl FROM products WHERE prodID = ?;`, [id], (err,results) => {
+        sql.query(`SELECT * FROM products WHERE id = ?;`, [id], (err,results) => {
             if(err) result(err, null);
             else result(null, results);
         })
@@ -79,14 +79,14 @@ class products {
     }
 
     updateProduct(data,id, result){
-        sql.query(`UPDATE products SET ? WHERE prodID = ?;`, [data, id], (err, results) => {
+        sql.query(`UPDATE products SET ? WHERE id = ?;`, [data, id], (err, results) => {
             if(err) result(err, null);
             else result(null, results);
         })
     }
 
     deleteProduct(id,result){
-        sql.query(`DELETE FROM products WHERE prodID = ?`, [id], (err, results) => {
+        sql.query(`DELETE FROM products WHERE id = ?`, [id], (err, results) => {
             if(err) result(err, null);
             else result(null, results);
         })
