@@ -1,7 +1,7 @@
 import { createStore } from 'vuex'
 import axios from 'axios';
 
-const bStoreURL = "http://localhost:3200"
+const bStoreURL = "https://nodejs-eomp-backend.onrender.com"
 
 export default createStore({
   state: {

@@ -74,7 +74,6 @@
             <td></td>
             <td></td>
             <td></td>
-            <td><button class="btn btn-primary w-100">Add User</button></td>
           </tr>
         </tfoot>
       </table>
