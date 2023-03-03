@@ -18,14 +18,14 @@ class user {
     }
 
     fetchUsers(result){
-        sql.query(`SELECT userID, firstName, lastName, gender, emailAdd, userPass, userRole, userProfile FROM users;`, (err,results) => {
+        sql.query(`SELECT userID, firstName, lastName, gender, emailAdd, userPass, userRole, userProfile, cellphoneNumber FROM users;`, (err,results) => {
             if(err) result(err);
             else result(null, results);
         })
     }
 
     fetchUser(id, result){
-        sql.query(`SELECT userID, firstName, lastName, gender, emailAdd, userRole, userPass FROM users WHERE userID = ?;`, [id], (err, results) => {
+        sql.query(`SELECT userID, firstName, lastName, gender, emailAdd, userRole, userPass, cellphoneNumber FROM users WHERE userID = ?;`, [id], (err, results) => {
             if(err) result(err, null);
             else result(null, results);
         })
