@@ -19,6 +19,7 @@
     </div>
 </template>
 
+
 <script>
 import { useStore } from 'vuex';
 import {computed} from '@vue/runtime-core'

@@ -26,6 +26,7 @@
         <button type="button" class="btn btn-primary" data-bs-dismiss="modal" v-on:click="editProduct(productId)">Save changes</button>
       </div>
     </div>
+    
   </div>
 </div>
 </template>

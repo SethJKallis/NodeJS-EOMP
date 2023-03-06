@@ -12,7 +12,6 @@ export default createStore({
     showSpinner: true,
     message: null
   },
-
   
   mutations: {
     setUsers(state, users) {

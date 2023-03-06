@@ -45,6 +45,7 @@ export default{
             userID: '2',
         }
 
+        
     const addProduct = async () => {
       store.dispatch('addProduct', payloadTemplate);
       store.dispatch('fetchProducts');

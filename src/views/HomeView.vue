@@ -40,6 +40,7 @@
   </body>
 </template>
 
+
 <style scoped>
 .home {
   display: flex;

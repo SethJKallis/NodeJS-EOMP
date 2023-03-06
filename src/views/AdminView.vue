@@ -25,6 +25,7 @@
                   </tr>
               </tbody>
               <tfoot>
+                
                 <tr>
                   <td></td>
                   <td></td>
